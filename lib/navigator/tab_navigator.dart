@@ -23,6 +23,7 @@ class _TabNavigatorState extends State<TabNavigator> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex:  _currentIndex,
+
         onTap: (index){
         _controller.jumpToPage(index);
         setState(() {
@@ -67,6 +68,12 @@ class _TabNavigatorState extends State<TabNavigator> {
       ),
       body: PageView(
         controller: _controller,
+        physics:new NeverScrollableScrollPhysics(), // disabled page swipe
+        onPageChanged: (index){
+      setState(() {
+       _currentIndex = index; 
+      });
+        },
         children: <Widget>[
           HomePage(),
           SearchPage(),
