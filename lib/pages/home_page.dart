@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:trip_app/dao/home_dao.dart';
+import 'package:trip_app/model/home_model.dart';
 
 const APPBAR_SCROLL_OFFSET = 100;
 
@@ -16,6 +20,7 @@ class _HomePageState extends State<HomePage> {
     "https://dimg03.c-ctrip.com/images/fd/tg/g1/M03/7E/19/CghzfVWw6OaACaJXABqNWv6ecpw824_C_500_280_Q90.jpg"
   ];
   double appBarAlpha = 0;
+  String resultStr = "";
 
   _onScroll(offset) {
     double alpha = offset / APPBAR_SCROLL_OFFSET;
@@ -25,8 +30,38 @@ class _HomePageState extends State<HomePage> {
       alpha = 1;
     }
     setState(() {
-     appBarAlpha = alpha; 
+      appBarAlpha = alpha;
     });
+  }
+
+  loadData() async {
+    // HomeDao.fetch().then((result){
+    //   setState(() {
+    //    resultStr = json.encode(result);
+    //   });
+    // })
+    // .catchError((e){
+    //   setState(() {
+    //    resultStr = e.toString();
+    //   });
+    // });
+     try {
+      HomeModel home = await HomeDao.fetch();
+      setState(() {
+        resultStr = json.encode(home);
+        print(resultStr);
+      });
+    } catch (e) {
+      setState(() {
+        resultStr = e.toString();
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
   }
 
   @override
@@ -62,7 +97,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 height: 800,
-                child: Text("首页"),
+                child: Text(resultStr),
               )
             ],
           ),
