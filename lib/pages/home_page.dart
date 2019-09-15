@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:trip_app/dao/home_dao.dart';
+import 'package:trip_app/model/common_model.dart';
 import 'package:trip_app/model/home_model.dart';
+import 'package:trip_app/widget/grid_nav.dart';
+import 'package:trip_app/widget/local_nav.dart';
 
 const APPBAR_SCROLL_OFFSET = 100;
 
@@ -20,6 +23,7 @@ class _HomePageState extends State<HomePage> {
     "https://dimg03.c-ctrip.com/images/fd/tg/g1/M03/7E/19/CghzfVWw6OaACaJXABqNWv6ecpw824_C_500_280_Q90.jpg"
   ];
   double appBarAlpha = 0;
+  List<CommonModel> localNavList;
   String resultStr = "";
 
   _onScroll(offset) {
@@ -35,21 +39,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadData() async {
-    // HomeDao.fetch().then((result){
-    //   setState(() {
-    //    resultStr = json.encode(result);
-    //   });
-    // })
-    // .catchError((e){
-    //   setState(() {
-    //    resultStr = e.toString();
-    //   });
-    // });
      try {
       HomeModel home = await HomeDao.fetch();
       setState(() {
-        resultStr = json.encode(home);
-        print(resultStr);
+         localNavList = home.localNavList;
       });
     } catch (e) {
       setState(() {
@@ -95,6 +88,7 @@ class _HomePageState extends State<HomePage> {
                   pagination: SwiperPagination(),
                 ),
               ),
+              LocalNav(localNavList: localNavList),
               Container(
                 height: 800,
                 child: Text(resultStr),
