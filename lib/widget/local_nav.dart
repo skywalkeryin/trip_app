@@ -27,7 +27,9 @@ class LocalNav extends StatelessWidget {
       items.add(_item(context, model));
     });
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround, children: items);
+        mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+        children: items
+    );
   }
 
   Widget _item(BuildContext context, CommonModel model) {

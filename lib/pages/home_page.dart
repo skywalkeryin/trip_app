@@ -1,11 +1,9 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:trip_app/dao/home_dao.dart';
 import 'package:trip_app/model/common_model.dart';
 import 'package:trip_app/model/home_model.dart';
-import 'package:trip_app/widget/grid_nav.dart';
 import 'package:trip_app/widget/local_nav.dart';
 
 const APPBAR_SCROLL_OFFSET = 100;
@@ -60,6 +58,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xfff2f2f2),
         body: Stack(children: <Widget>[
       MediaQuery.removePadding(
         removeTop: true,
@@ -88,7 +87,10 @@ class _HomePageState extends State<HomePage> {
                   pagination: SwiperPagination(),
                 ),
               ),
-              LocalNav(localNavList: localNavList),
+              Padding(
+                padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                child: LocalNav(localNavList: localNavList),
+              ),
               Container(
                 height: 800,
                 child: Text(resultStr),
